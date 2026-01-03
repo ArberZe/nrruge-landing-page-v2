@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface HeroSectionProps {
-  onWaitlistSubmit: (email: string) => void;
+  onWaitlistSubmit?: (email: string) => void;
 }
 
 export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
@@ -18,18 +18,28 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
 
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || isSubmitting) return;
 
     setIsSubmitting(true);
-    onWaitlistSubmit(email);
 
-    setTimeout(() => {
-      setEmail("");
-      setIsSubmitting(false);
-    }, 800);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as any).toString(),
+    });
+
+    onWaitlistSubmit?.(email);
+
+    setSuccess(true);
+    setEmail("");
+    setIsSubmitting(false);
   };
 
   return (
@@ -37,7 +47,6 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20"
     >
-      {/* Background */}
       <motion.div style={{ y }} className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ y: [0, -30, 0], rotate: [0, 180, 360] }}
@@ -57,7 +66,6 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
       </motion.div>
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-6xl mx-auto text-center">
-        {/* Logo */}
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,18 +93,24 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
           Bëhu pjesë e aventurës sonë! Na jepni email-in tuaj për të qenë i pari që do ta provojë.
         </motion.p>
 
-        {/* Waitlist */}
+        {/* WAITLIST FORM */}
         <motion.form
+          name="waitlist"
+          method="POST"
+          data-netlify="true"
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="max-w-md mx-auto mb-16"
         >
+          <input type="hidden" name="form-name" value="waitlist" />
+
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative group">
               <input
                 type="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Shkruani email-in tuaj"
@@ -120,9 +134,14 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.button>
           </div>
+
+          {success && (
+            <p className="text-sm text-green-400 mt-4">
+              Faleminderit! Jeni shtuar në waitlist.
+            </p>
+          )}
         </motion.form>
 
-        {/* Mockup */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -144,14 +163,9 @@ export function HeroSection({ onWaitlistSubmit }: HeroSectionProps) {
         .pulse-ring {
           animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-
         @keyframes pulse-ring {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-          }
-          50% {
-            box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.1);
-          }
+          0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+          50% { box-shadow: 0 0 0 8px rgba(37,99,235,0.1); }
         }
       `}</style>
     </section>
