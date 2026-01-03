@@ -8,8 +8,8 @@ import { Toaster } from "sonner";
 
 export default function App() {
   const handleWaitlistSubmit = (email: string) => {
-    toast.success("You're on the waitlist!", {
-      description: `We'll send updates to ${email}`,
+    toast.success("Jeni shtuar ne listen e pritjes!", {
+      description: `Do te ju dergojme info ${email}`,
       duration: 4000,
     });
   };

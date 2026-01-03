@@ -15,7 +15,7 @@ interface Feature {
 const features: Feature[] = [
   {
     id: 1,
-    title: "Live Tracking",
+    title: "Pozicionim ne kohe reale",
     description: "Track your ride in real-time with precision GPS and ETA updates every second.",
     icon: <MapPin className="w-8 h-8" />,
     image: "https://images.unsplash.com/photo-1698464795984-9da9eb4a99cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByaWRlJTIwc2hhcmluZyUyMGNhcnxlbnwxfHx8fDE3Njc0NDE1ODB8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -24,15 +24,15 @@ const features: Feature[] = [
   {
     id: 3,
     title: "24/7 Support",
-    description: "Our dedicated team is always here to help, day or night, whenever you need us.",
+    description: "Ekipi ynë i përkushtuar është gjithmonë këtu për t’ju ndihmuar, ditë e natë, sa herë që keni nevojë.",
     icon: <Headphones className="w-8 h-8" />,
     image: "https://images.unsplash.com/photo-1653212883731-4d5bc66e0181?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXN0b21lciUyMHN1cHBvcnQlMjBwcm9mZXNzaW9uYWx8ZW58MXx8fHwxNzY3NDI5MzgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
     gradient: "from-lime-400/20 to-green-500/20",
   },
   {
     id: 4,
-    title: "Safety First",
-    description: "Advanced verification, emergency assistance, and real-time safety monitoring.",
+    title: "Siguria e para",
+    description: "Verifikim i avancuar, ndihmë emergjente dhe monitorim i sigurisë në kohë reale.",
     icon: <Shield className="w-8 h-8" />,
     image: "https://images.unsplash.com/photo-1661176920546-5b39bcd9fdba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMDNkJTIwc3BoZXJlJTIwbmVvbnxlbnwxfHx8fDE3Njc0NDE1Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
     gradient: "from-orange-500/20 to-red-500/20",
